@@ -43,6 +43,7 @@ interface LoginFormProps {
 
 const LoginForm: FC<LoginFormProps> = ({ className = '' }) => {
   const [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState(false) // Ajout de l'état de chargement
 
   const router = useRouter()
 
@@ -56,22 +57,20 @@ const LoginForm: FC<LoginFormProps> = ({ className = '' }) => {
  
   // 2. Définir un gestionnaire de soumission.
    async function onSubmit(values: z.infer<typeof formSchema>) {
-    // setIsLoading(true);
+    setLoading(true) // Démarrer le chargement
     try {
       const response = await login(values)
       toast.success(response.message ?? 'Vous êtes maintenant connecté !');
       form.reset() // reset form
   
-      // redirect to dashboard page 
+      // Rediriger vers la page dashboard
       router.push(ROUTES.Dashboard.home);
     } catch (error) {
       console.log(error);
-      
-        toast.error((error as any)?.response?.data?.message || "Identifiant ou mot de passe incorrect ");
+      toast.error((error as any)?.response?.data?.message || "Identifiant ou mot de passe incorrect ");
     } finally {
-        // setIsLoading(false);
+      setLoading(false) // Arrêter le chargement
     }
-
   }
 
   return (
@@ -132,14 +131,14 @@ const LoginForm: FC<LoginFormProps> = ({ className = '' }) => {
               />
 
               {/* Bouton de soumission */}
-              <Button type="submit" disabled={form.formState.isLoading} className="w-full">
-                {form.formState.isLoading && 
+              <Button type="submit" disabled={loading} className="w-full">
+                {loading && 
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Please wait...
+                    Patientez...
                   </>
                 }
-                {!form.formState.isLoading && 'Se connecter'}
+                {!loading && 'Se connecter'}
               </Button>
             </div>
           </form>

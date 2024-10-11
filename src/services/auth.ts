@@ -13,7 +13,7 @@ export async function login(credentials: CredentialUser): Promise<LoginResponseD
 }
 
 export async function logout(): Promise<{ message: string }> {
-    const response = await httpClient.delete(ENDPOINTS.Auth.logout).then(r => r.data)
+    const response = await httpClient.post(ENDPOINTS.Auth.logout).then(r => r.data)
     deleteClientCookie('access_token')
     return response
 }
