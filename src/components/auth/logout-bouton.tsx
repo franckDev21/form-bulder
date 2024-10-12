@@ -21,7 +21,7 @@ const LogoutBouton = () => {
     }
   }
   return (
-    <button onClick={handleClick} className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary">
+    <button onClick={handleClick} className="inline-flex relative z-40 items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary">
       <svg
         className="fill-current"
         width="22"

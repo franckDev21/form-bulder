@@ -6,4 +6,14 @@ export const ENDPOINTS = {
         userInfo: 'user-info',
     },
 
+    Form: {
+        listing: 'form',
+        create: 'form',
+        show: (id: string) => `form/${id}`,
+    },
+
+    User: {
+        listing: 'user',
+    }
+
 } as const

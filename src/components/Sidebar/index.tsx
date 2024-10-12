@@ -81,8 +81,8 @@ const menuGroups = [
         label: "Formulaires",
         route: "#",
         children: [
-          { label: "Listes des formulaires", route: "/forms/form-elements" },
-          { label: "Création d'un formulaires", route: "/forms/form-layout" },
+          { label: "Listes des formulaires", route: "/dashboard/forms" },
+          { label: "Création d'un formulaires", route: "/dashboard/forms/create" },
         ],
       },
       {
