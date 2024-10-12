@@ -9,12 +9,12 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "../ui/label";
 
 interface EditFieldModalProps {
   isOpen: boolean;
@@ -38,7 +38,7 @@ const EditFieldModal: FC<EditFieldModalProps> = ({ isOpen, field, onClose, onSav
 
   useEffect(() => {
     setEditedField(field);
-  },[field])
+  }, [field]);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -50,46 +50,68 @@ const EditFieldModal: FC<EditFieldModalProps> = ({ isOpen, field, onClose, onSav
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4">
-          <Input
-            name="name"
-            value={editedField.name}
-            onChange={handleChange}
-            placeholder="Nom du champ"
-          />
-          <Input
-            name="placeholder"
-            value={editedField.placeholder}
-            onChange={handleChange}
-            placeholder="Placeholder du champ"
-          />
-          <Input
-            name="key"
-            value={editedField.key}
-            onChange={handleChange}
-            placeholder="Clé du champ"
-          />
+          <div className="grid gap-2 grid-cols-2">
+            <div className='space-y-2'>
+              <Label htmlFor="name">Nom du champ</Label>
+              <Input
+                name="name"
+                id="name"
+                value={editedField.name}
+                onChange={handleChange}
+                placeholder="Nom du champ"
+              />
+            </div>
+            <div className='space-y-2'>
+              <Label htmlFor="placeholder">Placeholder</Label>
+              <Input
+                name="placeholder"
+                id="placeholder"
+                value={editedField.placeholder}
+                onChange={handleChange}
+                placeholder="Placeholder du champ"
+              />
+            </div>
+          </div>
 
-          <Select
-            onValueChange={(value) => setEditedField({ ...editedField, type: value as FieldType['type'] })}
-            value={editedField.type}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Type de champ" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="input">Input</SelectItem>
-              <SelectItem value="textarea">Textarea</SelectItem>
-              <SelectItem value="select">Select</SelectItem>
-              {/* Ajoutez d'autres types si nécessaire */}
-            </SelectContent>
-          </Select>
+          <div className="grid gap-2 grid-cols-2">
+            <div className='space-y-2'>
+              <Label htmlFor="key">Clé du champ</Label>
+              <Input
+                name="key"
+                id="key"
+                value={editedField.key}
+                onChange={handleChange}
+                placeholder="Clé du champ"
+              />
+            </div>
+
+            <div className='space-y-2'>
+              <Label htmlFor="type">Type de champ <span className='uppercase text-orange-400 text-xs font-bold px-1'>[ {editedField.type} ]</span></Label>
+              <Select
+                name="type"
+                onValueChange={(value) => setEditedField({ ...editedField, type: value as FieldType['type'] })}
+                value={editedField.type}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Type de champ" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="input">Input</SelectItem>
+                  <SelectItem value="textarea">Textarea</SelectItem>
+                  <SelectItem value="select">Select</SelectItem>
+                  {/* Ajoutez d'autres types si nécessaire */}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          
 
           <div className="flex items-center space-x-2">
             <Checkbox
               checked={editedField.required}
               onCheckedChange={(checked) => setEditedField({ ...editedField, required: checked as boolean })}
             />
-            <span>Requis</span>
+            <Label>Requis</Label>
           </div>
 
           <div className="flex items-center space-x-2">
@@ -97,11 +119,11 @@ const EditFieldModal: FC<EditFieldModalProps> = ({ isOpen, field, onClose, onSav
               checked={editedField.crypted}
               onCheckedChange={(checked) => setEditedField({ ...editedField, crypted: checked as boolean })}
             />
-            <span>Crypter ce champ</span>
+            <Label>Crypter ce champ</Label>
           </div>
         </div>
         <DialogFooter>
-          <Button onClick={onClose}>Annuler</Button>
+          <Button variant='secondary' onClick={onClose}>Annuler</Button>
           <Button onClick={handleSave}>Enregistrer</Button>
         </DialogFooter>
       </DialogContent>

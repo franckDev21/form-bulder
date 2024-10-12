@@ -55,7 +55,6 @@ const LoginForm: FC<LoginFormProps> = ({ className = '' }) => {
     },
   })
  
-  // 2. Définir un gestionnaire de soumission.
    async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true) // Démarrer le chargement
     try {

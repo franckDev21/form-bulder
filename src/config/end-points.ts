@@ -10,6 +10,7 @@ export const ENDPOINTS = {
         listing: 'form',
         create: 'form',
         show: (id: string) => `form/${id}`,
+        delete: (id: string) => `form/${id}`,
     },
 
     User: {

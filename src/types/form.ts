@@ -43,3 +43,10 @@ export const exempleLignes: FieldLigneType[] = [
     ]
   }
 ];
+
+export interface PostRequestFormData {
+  name: string;
+  validated_user_id: string;
+  lignes: FieldLigneType[];
+}
+

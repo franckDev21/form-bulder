@@ -20,6 +20,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { formatDateFR } from "@/helpers/forms";
 
+import DeleteAlert from "./delete-alert";
+
 export const columns: ColumnDef<FormModel>[] = [
   {
     id: "select",
@@ -151,6 +153,10 @@ export const columns: ColumnDef<FormModel>[] = [
             <DropdownMenuSeparator />
             <DropdownMenuItem>Voir les reponses utilisateurs</DropdownMenuItem>
             <DropdownMenuItem>Voir les details</DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <DeleteAlert formId={row.original.id}  />
+            </DropdownMenuItem>
+            
           </DropdownMenuContent>
         </DropdownMenu>
       );

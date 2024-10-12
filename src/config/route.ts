@@ -3,7 +3,7 @@ export const ROUTES = {
     Home: '/',
 
     Dashboard: {
-        home: 'dashboard',
+        home: '/dashboard',
         Form: {
             home: '/dashboard/forms',
             create: '/dashboard/forms/create',

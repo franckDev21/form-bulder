@@ -99,6 +99,13 @@ const FieldFormBulder: FC<FieldFormBulderProps> = ({ handleLigneChange }) => {
         </button>
       </header>
 
+      {fieldLignes.length === 0 && 
+        <div className=' flex flex-col bg-white border p-2 rounded-md justify-center items-center'>
+          <h2 className='text-sm font-semibold text-gray-700'>Aucune ligne de formulaire</h2>
+          <span className=' text-xs italic text-gray-500'>Cliquez sur le bouton <strong>'Ajouter'</strong> pour ajouter une nouvelle ligne </span>
+        </div>
+      }
+
       <div className='space-y-3'>
         {fieldLignes.map(ligne => (
           <FieldLigneCard 

@@ -21,7 +21,8 @@ import { Input } from "@/components/ui/input";
 import { UserModel } from "@/models/user";
 import { UserServiceClient } from "@/services/user/client-actions";
 import FieldFormBulder from "./field-form-bulder";
-import { FieldLigneType } from "@/types/form";
+import { FieldLigneType, PostRequestFormData } from "@/types/form";
+import { Loader2 } from "lucide-react";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Le nom doit avoir au moins 2 caractères." }), // Correction ici
@@ -30,9 +31,11 @@ const formSchema = z.object({
 
 interface RequestFormProps {
   className?: string;
+  handleSubmit: (formData: PostRequestFormData) => void;
+  loading: boolean;
 }
 
-const RequestForm: FC<RequestFormProps> = ({ className = "" }) => {
+const RequestForm: FC<RequestFormProps> = ({ className = "", handleSubmit, loading }) => {
   const [users, setUsers] = useState<UserModel[]>([]);
   const [lignes, setLignes] = useState<FieldLigneType[]>([]);
 
@@ -44,9 +47,7 @@ const RequestForm: FC<RequestFormProps> = ({ className = "" }) => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+    handleSubmit({ lignes,...values });
   }
 
   // Fetch user data
@@ -108,7 +109,16 @@ const RequestForm: FC<RequestFormProps> = ({ className = "" }) => {
             console.log(fieldLignes);
           }} />
 
-          <Button type="submit">Enregistrer votre formulaire</Button>
+          {/* Bouton de soumission */}
+          <Button type="submit" disabled={loading} className="w-full font-bold">
+            {loading && 
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Patientez...
+              </>
+            }
+            {!loading && 'Enregistrer votre formulaire'}
+          </Button>
         </form>
       </Form>
     </div>
