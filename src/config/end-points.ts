@@ -9,6 +9,7 @@ export const ENDPOINTS = {
     Form: {
         listing: 'form',
         create: 'form',
+        update: (id: string) => `form/${id}`,
         show: (id: string) => `form/${id}`,
         delete: (id: string) => `form/${id}`,
     },

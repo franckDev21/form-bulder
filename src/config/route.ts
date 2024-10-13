@@ -7,6 +7,7 @@ export const ROUTES = {
         Form: {
             home: '/dashboard/forms',
             create: '/dashboard/forms/create',
+            edit: (formId: string) =>  `/dashboard/forms/edit/${formId}`,
         }
     },
 

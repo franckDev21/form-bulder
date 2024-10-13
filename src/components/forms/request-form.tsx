@@ -23,6 +23,8 @@ import { UserServiceClient } from "@/services/user/client-actions";
 import FieldFormBulder from "./field-form-bulder";
 import { FieldLigneType, PostRequestFormData } from "@/types/form";
 import { Loader2 } from "lucide-react";
+import { FormModel } from "@/models/form";
+import { AvatarUser } from "@/components/Header/AvatarUser";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Le nom doit avoir au moins 2 caractères." }), // Correction ici
@@ -33,18 +35,23 @@ interface RequestFormProps {
   className?: string;
   handleSubmit: (formData: PostRequestFormData) => void;
   loading: boolean;
+  editForm ?: FormModel;
 }
 
-const RequestForm: FC<RequestFormProps> = ({ className = "", handleSubmit, loading }) => {
+const RequestForm: FC<RequestFormProps> = ({ className = "", handleSubmit, loading, editForm }) => {
   const [users, setUsers] = useState<UserModel[]>([]);
   const [lignes, setLignes] = useState<FieldLigneType[]>([]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
+      name: editForm?.name ?? '',
     },
   });
+
+  if(editForm){
+    form.setValue('validated_user_id', editForm.user_validated.id+'');
+  }
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     handleSubmit({ lignes,...values });
@@ -55,6 +62,10 @@ const RequestForm: FC<RequestFormProps> = ({ className = "", handleSubmit, loadi
     const fetchUsers = async () => {
       const dataResponse = await UserServiceClient.listing();
       setUsers(dataResponse.data);
+
+      if(editForm){
+        setLignes(editForm.lignes as any[]);
+      }
     };
     fetchUsers();
   }, []);
@@ -90,7 +101,15 @@ const RequestForm: FC<RequestFormProps> = ({ className = "", handleSubmit, loadi
                     </SelectTrigger>
                     <SelectContent>
                       {users.map(user => (
-                        <SelectItem key={user.id} value={user.id.toString()}>{user.name}</SelectItem>
+                        <SelectItem className='py-2' key={user.id} value={user.id.toString()}>
+                          <div className="flex space-x-3 justify-start items-center py-2 px-2">
+                            <AvatarUser />
+                            <div className="flex items-center space-x-1">
+                              <span className="font-bold">{user.name}</span>
+                              <span>{user.email}</span>
+                            </div>
+                          </div>
+                        </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
@@ -104,7 +123,7 @@ const RequestForm: FC<RequestFormProps> = ({ className = "", handleSubmit, loadi
           />
 
           {/* composant de genererations des lignes du formulaire */}
-          <FieldFormBulder handleLigneChange={setLignes} />
+          <FieldFormBulder defaultLignes={editForm ? (editForm.lignes as any[]) : []} handleLigneChange={setLignes} />
 
           {/* Bouton de soumission */}
           <Button type="submit" disabled={loading} className="w-full font-bold">

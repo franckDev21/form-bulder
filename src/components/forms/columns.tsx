@@ -21,6 +21,8 @@ import {
 import { formatDateFR } from "@/helpers/forms";
 
 import DeleteAlert from "./delete-alert";
+import Link from "next/link";
+import { ROUTES } from "@/config/route";
 
 export const columns: ColumnDef<FormModel>[] = [
   {
@@ -152,7 +154,9 @@ export const columns: ColumnDef<FormModel>[] = [
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Voir les reponses utilisateurs</DropdownMenuItem>
-            <DropdownMenuItem>Voir les details</DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href={ROUTES.Dashboard.Form.edit(row.original.id)}>Voir les details</Link>
+            </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <DeleteAlert formId={row.original.id}  />
             </DropdownMenuItem>

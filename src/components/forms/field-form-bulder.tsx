@@ -2,18 +2,28 @@
 
 import { FieldLigneType, FieldType } from "@/types/form";
 import { Plus } from "lucide-react";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import FieldLigneCard from "./field-ligne-card";
 import EditFieldModal from "./edit-field-modal";
 
 interface FieldFormBulderProps {
   handleLigneChange: (lignes: FieldLigneType[]) => void;
+  defaultLignes?: FieldLigneType[];  // Ajouter des lignes par défaut comme props optionnel
 }
 
-const FieldFormBulder: FC<FieldFormBulderProps> = ({ handleLigneChange }) => {
+const FieldFormBulder: FC<FieldFormBulderProps> = ({ handleLigneChange, defaultLignes = [] }) => {
   const [fieldLignes, setfieldLignes] = useState<FieldLigneType[]>([]);
   const [fieldToEdit, setFieldToEdit] = useState<FieldType | null>(null); // Champ à éditer
   const [isEditModalOpen, setIsEditModalOpen] = useState(false); // Contrôle de la modal
+
+
+  useEffect(() => {
+    if(defaultLignes.length > 0){
+      setfieldLignes(defaultLignes); // Initialiser les lignes par défaut quand le composant se charge ou que defaultLignes change
+      console.log('defaultLignes : ',defaultLignes);
+    }
+  }, [defaultLignes]);
+
 
   const addNewLigne = () => {
     const newLigne: FieldLigneType = {

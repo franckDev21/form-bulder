@@ -20,7 +20,7 @@ export interface FieldType {
 export interface FieldLigneType {
   id: number;
   column_count: number;   // Nombre de colonnes dans la ligne
-  fields: FieldType[];    // Liste des champs dans la ligne
+  fields: any[];    // Liste des champs dans la ligne
 }
 
 // Exemple de données conformes aux interfaces

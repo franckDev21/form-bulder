@@ -8,6 +8,10 @@ export class FormServiceClient {
     return await httpClient.post(ENDPOINTS.Form.create, data).then(r => r.data)
   }
 
+  static update = async (formId: string, data: PostRequestFormData):Promise<{ data: FormModel }> => {
+    return await httpClient.patch(ENDPOINTS.Form.update(formId), data).then(r => r.data)
+  }
+
   static delete = async (formId: string):Promise<{ data: FormModel }> => {
     return await httpClient.delete(ENDPOINTS.Form.delete(`${formId}`)).then(r => r.data)
   }

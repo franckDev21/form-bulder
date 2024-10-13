@@ -1,3 +1,5 @@
+import { OptionKeyValueType, PostRequestFormData } from "@/types/form";
+
 const monthNamesFR = [
   "Jan", "Fév", "Mar", "Avr", "Mai", "Juin",
   "Juil", "Août", "Sep", "Oct", "Nov", "Déc"
@@ -20,3 +22,59 @@ export const formatDateFR = (isoDate: string): string => {
 
   return `${day} ${month} ${year} à ${hours}h${minutes}`;
 };
+
+
+type Option = {
+  key: string;
+  value: string;
+};
+
+/**
+ * 
+ * 
+  Exemple d'utilisation :
+  const optionsArray = [
+    {
+      key: "option_1",
+      value: "Code d'ivoire"
+    },
+    {
+      key: "option_2",
+      value: "Congo"
+    }
+  ];
+  const result = convertArrayToObject(optionsArray);
+  console.log(result);
+
+  Résultat attendu:
+  {
+    option_1: "Code d'ivoire",
+    option_2: "Congo"
+  }
+ */
+// Conversion des options de tableau en objet
+export const convertArrayOptionToObject = (array: OptionKeyValueType[]): { [key: string]: string } => {
+  return array.reduce((acc, current) => {
+    acc[current.key] = current.value;
+    return acc;
+  }, {} as { [key: string]: string });
+};
+
+// Fonction helper pour formater les options dans chaque champ (field)
+export const formatFieldsOptions = (form: PostRequestFormData): PostRequestFormData => {
+  const updatedLignes = form.lignes.map((ligne) => {
+    const updatedFields = ligne.fields.map((field) => {
+      if (field.options) {
+        // Si le champ a des options, les formater
+        const formattedOptions = convertArrayOptionToObject(field.options);
+        return { ...field, options: formattedOptions };
+      }
+      return field;
+    });
+
+    return { ...ligne, fields: updatedFields };
+  });
+
+  return { ...form, lignes: updatedLignes };
+};
+

@@ -44,7 +44,7 @@ const DeleteAlert = forwardRef<HTMLButtonElement, DeleteAlertProps>(({ formId },
     <div>
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button ref={ref} variant="outline">Supprimer le formulaire</Button>
+          <Button ref={ref} variant="outline" className="w-full">Supprimer le formulaire</Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
