@@ -13,7 +13,7 @@ interface FieldCardProps {
 const FieldCard: FC<FieldCardProps> = ({ field,  handleEditField, handleDeleteField }) => {
   return (
     <div className=' space-y-2 w-full'>
-      <span>{field.name}</span>
+      <span>{field.name}  <span className='uppercase text-orange-400 text-xs font-bold px-1'>[ {field.type} ]</span></span>
       <div className='px-4 py-2 w-full rounded-md bg-slate-100 flex items-center justify-between'>
         <span>{field.placeholder}</span>
         <span className=" space-x-1 inline-flex items-center">

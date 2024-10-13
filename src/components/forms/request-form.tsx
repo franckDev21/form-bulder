@@ -104,10 +104,7 @@ const RequestForm: FC<RequestFormProps> = ({ className = "", handleSubmit, loadi
           />
 
           {/* composant de genererations des lignes du formulaire */}
-          <FieldFormBulder handleLigneChange={(fieldLignes) => {
-            setLignes(fieldLignes);
-            console.log(fieldLignes);
-          }} />
+          <FieldFormBulder handleLigneChange={setLignes} />
 
           {/* Bouton de soumission */}
           <Button type="submit" disabled={loading} className="w-full font-bold">

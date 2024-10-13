@@ -17,6 +17,7 @@ const CreateRequestForm = () => {
     setLoading(true);
     try {
       await FormServiceClient.store(data);
+      console.log(data);
       toast.success('Votre formulaire a été créé avec succès !');
       router.push(ROUTES.Dashboard.Form.home)
     } catch (error) {

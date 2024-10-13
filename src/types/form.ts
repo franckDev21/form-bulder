@@ -1,4 +1,10 @@
 // Interface pour représenter un champ (field)
+
+export type OptionKeyValueType = {
+  key: string;
+  value: string;
+}
+
 export interface FieldType {
   id: number;
   name: string;           // Nom du champ
@@ -7,6 +13,7 @@ export interface FieldType {
   crypted: boolean;       // Indique si le champ doit être chiffré
   type: string;           // Type du champ (ex: 'input')
   key: string;            // Clé unique du champ
+  options?: OptionKeyValueType[];  // Tableau de cle valuer pour les champs de type 'select'
 }
 
 // Interface pour représenter une ligne de champs (field line)
