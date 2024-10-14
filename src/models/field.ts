@@ -5,5 +5,6 @@ export interface FieldModel {
     type: string;
     placeholder: string;
     required: boolean;
+    options: any[];
     crypted: boolean;
 }

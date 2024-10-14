@@ -24,6 +24,7 @@ const EditRequestForm: FC<EditRequestFormProps> = ({ editForm }) => {
     try {
       await FormServiceClient.update(editForm.id, formatFieldsOptions(data));
       toast.success('Votre formulaire a été modifié avec succès !');
+      router.refresh();
       router.push(ROUTES.Dashboard.Form.home)
     } catch (error) {
       console.log(error);

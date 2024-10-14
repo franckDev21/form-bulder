@@ -8,6 +8,7 @@ export const ROUTES = {
             home: '/dashboard/forms',
             create: '/dashboard/forms/create',
             edit: (formId: string) =>  `/dashboard/forms/edit/${formId}`,
+            preview: (formId: string) =>  `/dashboard/forms/preview/${formId}`,
         }
     },
 
